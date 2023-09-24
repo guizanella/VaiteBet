@@ -30,21 +30,21 @@ const styles = StyleSheet.create({
     },
 });
 
-const Jogo = ({ timeCasa, empate, timeFora }) => (
+const Jogo = ({ jogo }) => (
     <View style={styles.container}>
         <Botao
             style={styles.botaoTime}
-            text={timeCasa}
+            text={jogo.casa + " " + jogo.oddCasa.toFixed(2)}
             textStyle={styles.texto}
         />
         <Botao
             style={styles.botaoEmpate}
-            text={empate}
+            text={"X " + jogo.empate.toFixed(2)}
             textStyle={styles.texto}
         />
         <Botao
             style={styles.botaoTime}
-            text={timeFora}
+            text={jogo.fora + " " + jogo.oddFora.toFixed(2)}
             textStyle={styles.texto}
         />
     </View>

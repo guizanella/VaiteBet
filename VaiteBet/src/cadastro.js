@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
+import React from 'react';
 
 import Botao from './botao'
 import Input from './input'

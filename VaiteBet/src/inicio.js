@@ -1,9 +1,12 @@
-import { StyleSheet, Text, View, Button } from 'react-native';
-import React, { Component } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
 
 import Botao from './botao'
 import Logo from './logo'
 import Jogo from './jogo'
+import JogosList from './objetos/jogosList';
+import Usuario from './objetos/usuario';
+import Saldo from './saldo'
 
 const styles = StyleSheet.create({
     container: {
@@ -35,18 +38,17 @@ const styles = StyleSheet.create({
 
 export default function Inicio({ navigation }) {
 
+    const principaisJogos = JogosList.slice(0, 5);
+
     return (
         <View style={styles.container}>
             <Logo
                 size={170}
             />
             <Text style={{ color: 'white' }}>
-                Olá, João!
+                Olá, {Usuario.Nome}!
             </Text>
-            <Text style={styles.cor}>
-                Seu saldo atual:{' '}
-                <Text style={{ fontWeight: 'bold' }}>1.576,85</Text>
-            </Text>
+            <Saldo/>
             <View style={styles.botoes}>
                 <Botao
                     style={styles.botao}
@@ -58,11 +60,11 @@ export default function Inicio({ navigation }) {
                 />
             </View>
             <View alignItems='center'>
-                <Jogo timeCasa="Atlético MG 1.00" empate="X 2.00" timeFora="Santos 3.00" />
-                <Jogo timeCasa="América MG 1.00" empate="X 2.00" timeFora="São Paulo 3.00" />
-                <Jogo timeCasa="Botafogo 1.00" empate="X 2.00" timeFora="Bahia 3.00" />
-                <Jogo timeCasa="Grêmio 1.00" empate="X 2.00" timeFora="Cruzeiro 3.00" />
-                <Jogo timeCasa="Athletico PR 1.00" empate="X 2.00" timeFora="Internacional 3.00" />
+
+                {principaisJogos.map((jogo) => (
+                    <Jogo jogo={jogo} />
+                ))}
+
                 <Botao
                     style={styles.botao}
                     text='Mais Jogos'
