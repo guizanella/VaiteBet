@@ -3,8 +3,8 @@ import React from 'react';
 
 import Logo from './coomponentes/logo'
 import Saldo from './coomponentes/saldo';
-import Jogo from './jogo'
-import JogosList from './objetos/jogosList';
+import Aposta from './aposta'
+import ApostasList from './objetos/apostasList';
 
 const styles = StyleSheet.create({
     container: {
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function Jogos() {
+export default function Historico() {
 
     return (
         <View style={styles.container}>
@@ -22,11 +22,11 @@ export default function Jogos() {
                 size={170}
             />
             <Saldo/>
-            <View alignItems='center' paddingBottom={180}>
+            <View alignItems='flex' style={{width: '100%'}} paddingBottom={180}>
                 <FlatList
-                    data={JogosList}
+                    data={ApostasList}
                     keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item }) => <Jogo jogo={item} />}
+                    renderItem={({ item }) => <Aposta aposta={item} />}
                     marginVertical = {10}
                 />
             </View>

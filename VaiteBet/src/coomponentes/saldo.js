@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Usuario from './objetos/usuario';
+import Usuario from '../objetos/usuario';
 import { Text } from 'react-native';
 
 class Saldo extends Component {

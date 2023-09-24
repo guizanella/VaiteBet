@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
-import Botao from './botao'
-import Logo from './logo'
+import Botao from './coomponentes/botao'
+import Logo from './coomponentes/logo'
+import Saldo from './coomponentes/saldo'
 import Jogo from './jogo'
 import JogosList from './objetos/jogosList';
 import Usuario from './objetos/usuario';
-import Saldo from './saldo'
 
 const styles = StyleSheet.create({
     container: {
@@ -53,10 +53,12 @@ export default function Inicio({ navigation }) {
                 <Botao
                     style={styles.botao}
                     text='Depositar'
+                    func={() => navigation.navigate('Deposito')}
                 />
                 <Botao
                     style={styles.botao}
                     text='Sacar'
+                    func={() => navigation.navigate('Saque')}
                 />
             </View>
             <View alignItems='center'>
@@ -77,7 +79,7 @@ export default function Inicio({ navigation }) {
                     style={styles.botao}
                     text='Histórico de Apostas'
                     textStyle={styles.textoBotao}
-                    func={() => navigation.navigate('Cadastro')}
+                    func={() => navigation.navigate('Historico')}
                 />
             </View>
         </View>

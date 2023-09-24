@@ -1,9 +1,9 @@
 import { StyleSheet, View } from 'react-native';
 import React from 'react';
 
-import Botao from './botao'
-import Input from './input'
-import Logo from './logo'
+import Botao from './coomponentes/botao'
+import Input from './coomponentes/input'
+import Logo from './coomponentes/logo'
 
 const styles = StyleSheet.create({
     container: {

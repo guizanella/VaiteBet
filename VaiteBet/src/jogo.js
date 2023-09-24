@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
-import Botao from './botao'
+import Botao from './coomponentes/botao'
 
 const styles = StyleSheet.create({
     container: {
