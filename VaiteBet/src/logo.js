@@ -10,7 +10,7 @@ class Logo extends Component {
                 style={{ 
                     width: this.props.size, 
                     height: this.props.size, 
-                    marginBottom: this.props.margem
+                    marginBottom: this.props.margem,
                 }}
             />
         );

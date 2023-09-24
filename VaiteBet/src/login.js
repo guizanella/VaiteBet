@@ -16,12 +16,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         paddingVertical: 13,
-        paddingHorizontal: 70,
+        width: 150,
         borderRadius: 10,
         backgroundColor: '#FFEB3B',
-    },
-    textoBotao: {
-        color: 'black'
+        marginBottom: 10,
     },
     botaoCadastro: {
         alignItems: 'center',
@@ -34,7 +32,7 @@ const styles = StyleSheet.create({
     }
 });
 
-export default function TelaPrincipal({ navigation }) {
+export default function Login({ navigation }) {
 
     return (
         <View style={styles.container}>
@@ -51,12 +49,11 @@ export default function TelaPrincipal({ navigation }) {
                 texto='Senha'
                 senha={true}
             />
-            <View style={{ alignItems: 'center', flex: 1, justifyContent: 'flex-end', paddingBottom: 80 }}>
+            <View style={{ alignItems: 'center', flex: 1, justifyContent: 'flex-end', paddingBottom: 85 }}>
                 <Botao
                     style={styles.botao}
                     text='Entrar'
-                    textStyle={styles.textoBotao}
-                    func={() => navigation.navigate('Tela')}
+                    func={() => navigation.navigate('Inicio')}
                 />
                 <Text style={{ color: 'white' }}>
                     Não possui uma conta?
@@ -65,7 +62,7 @@ export default function TelaPrincipal({ navigation }) {
                     style={styles.botaoCadastro}
                     text='Cadastre-se'
                     textStyle={styles.textoBotaoCadastro}
-                    func={() => navigation.navigate('Tela')}
+                    func={() => navigation.navigate('Cadastro')}
                 />
             </View>
         </View>

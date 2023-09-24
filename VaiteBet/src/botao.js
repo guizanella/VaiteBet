@@ -30,7 +30,6 @@ class Botao extends Component {
                 <Pressable style={this.props.style} onPress={this.props.func}>
                     <Text style={this.props.textStyle}> {this.props.text} </Text>
                 </Pressable>
-                <Text style={styles.cor}> {this.state.nome} </Text>
             </View>
         );
     }
