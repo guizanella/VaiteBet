@@ -3,6 +3,7 @@ import React from 'react';
 
 import Logo from './coomponentes/logo'
 import Saldo from './coomponentes/saldo';
+import ModalAposta from './coomponentes/modalAposta'; 
 import Jogo from './jogo'
 import JogosList from './objetos/jogosList';
 
@@ -18,6 +19,7 @@ export default function Jogos() {
 
     return (
         <View style={styles.container}>
+            <ModalAposta visivel={false}/>
             <Logo
                 size={170}
             />

@@ -31,23 +31,23 @@ const styles = StyleSheet.create({
 });
 
 const Jogo = ({ jogo }) => (
-    <View style={styles.container}>
-        <Botao
-            style={styles.botaoTime}
-            text={jogo.casa + " " + jogo.oddCasa.toFixed(2)}
-            textStyle={styles.texto}
-        />
-        <Botao
-            style={styles.botaoEmpate}
-            text={"X " + jogo.empate.toFixed(2)}
-            textStyle={styles.texto}
-        />
-        <Botao
-            style={styles.botaoTime}
-            text={jogo.fora + " " + jogo.oddFora.toFixed(2)}
-            textStyle={styles.texto}
-        />
-    </View>
-);
-
+            <View style={styles.container}>
+                <Botao
+                    style={styles.botaoTime}
+                    text={jogo.casa + " " + jogo.oddCasa.toFixed(2)}
+                    textStyle={styles.texto}
+                                    />
+                <Botao
+                    style={styles.botaoEmpate}
+                    text={"X " + jogo.empate.toFixed(2)}
+                    textStyle={styles.texto}
+                />
+                <Botao
+                    style={styles.botaoTime}
+                    text={jogo.fora + " " + jogo.oddFora.toFixed(2)}
+                    textStyle={styles.texto}
+                />
+            </View>
+        );
+    
 export default Jogo;
