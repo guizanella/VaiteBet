@@ -30,22 +30,34 @@ const styles = StyleSheet.create({
     },
 });
 
-const Jogo = ({ jogo }) => (
+const Jogo = ({ params }) => (
             <View style={styles.container}>
                 <Botao
                     style={styles.botaoTime}
-                    text={jogo.casa + " " + jogo.oddCasa.toFixed(2)}
+                    text={params[0].casa + " " + params[0].oddCasa.toFixed(2)}
                     textStyle={styles.texto}
-                                    />
+                    func={() => params[1].navigate('Apostar', {
+                        time: params[0].casa,
+                        odd: params[0].oddCasa,
+                    })}
+                />
                 <Botao
                     style={styles.botaoEmpate}
-                    text={"X " + jogo.empate.toFixed(2)}
+                    text={"X " + params[0].empate.toFixed(2)}
                     textStyle={styles.texto}
+                    func={() => params[1].navigate('Apostar', {
+                        time: 'Empate',
+                        odd: params[0].empate,
+                    })}
                 />
                 <Botao
                     style={styles.botaoTime}
-                    text={jogo.fora + " " + jogo.oddFora.toFixed(2)}
+                    text={params[0].fora + " " + params[0].oddFora.toFixed(2)}
                     textStyle={styles.texto}
+                    func={() => params[1].navigate('Apostar', {
+                        time: params[0].fora,
+                        odd: params[0].oddFora,
+                    })}
                 />
             </View>
         );

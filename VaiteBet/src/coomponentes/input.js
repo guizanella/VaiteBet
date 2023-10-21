@@ -20,6 +20,7 @@ class Input extends Component {
                 style={[styles.input, {width: this.props.width}]}
                 placeholder= {this.props.texto}
                 secureTextEntry={this.props.senha}
+                keyboardType={this.props.tipo}
             />
         );
     }

@@ -3,7 +3,6 @@ import React from 'react';
 
 import Logo from './coomponentes/logo'
 import Saldo from './coomponentes/saldo';
-import ModalAposta from './coomponentes/modalAposta'; 
 import Jogo from './jogo'
 import JogosList from './objetos/jogosList';
 
@@ -15,11 +14,10 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function Jogos() {
+export default function Jogos({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <ModalAposta visivel={false}/>
             <Logo
                 size={170}
             />
@@ -28,7 +26,7 @@ export default function Jogos() {
                 <FlatList
                     data={JogosList}
                     keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item }) => <Jogo jogo={item} />}
+                    renderItem={({ item }) => <Jogo params={[item,navigation]}/>}
                     marginVertical = {10}
                 />
             </View>

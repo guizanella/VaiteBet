@@ -4,7 +4,6 @@ import React from 'react';
 import Botao from './coomponentes/botao'
 import Logo from './coomponentes/logo'
 import Saldo from './coomponentes/saldo'
-import ModalAposta from './coomponentes/modalAposta';
 import Jogo from './jogo'
 import JogosList from './objetos/jogosList';
 import Usuario from './objetos/usuario';
@@ -43,7 +42,6 @@ export default function Inicio({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <ModalAposta visivel={false}/>
             <Logo
                 size={170}
             />
@@ -66,7 +64,7 @@ export default function Inicio({ navigation }) {
             <View alignItems='center'>
 
                 {principaisJogos.map((jogo) => (
-                    <Jogo jogo={jogo}/>
+                    <Jogo params={[jogo,navigation]}/>
                 ))}
 
                 <Botao
