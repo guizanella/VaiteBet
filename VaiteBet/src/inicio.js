@@ -1,12 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Botao from './coomponentes/botao'
 import Logo from './coomponentes/logo'
 import Saldo from './coomponentes/saldo'
 import Jogo from './jogo'
 import JogosList from './objetos/jogosList';
-import Usuario from './objetos/usuario';
+
+import { firebase } from './config/firebaseConfig'
 
 const styles = StyleSheet.create({
     container: {
@@ -38,6 +39,21 @@ const styles = StyleSheet.create({
 
 export default function Inicio({ navigation }) {
 
+    const [nome, setNome] = useState('')
+
+    useEffect(() => {
+        
+        
+        async function carregaNome() {
+            await firebase.database().ref('usuario/1').on('value', (snapshot) => {
+                setNome(snapshot.val().nome)
+            })
+        }
+
+        carregaNome()
+
+    }, []) 
+
     const principaisJogos = JogosList.slice(0, 5);
 
     return (
@@ -46,7 +62,7 @@ export default function Inicio({ navigation }) {
                 size={170}
             />
             <Text style={{ color: 'white' }}>
-                Olá, {Usuario.Nome}!
+                Olá, {nome}!
             </Text>
             <Saldo/>
             <View style={styles.botoes}>

@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 
 import Botao from './coomponentes/botao'
-import Input from './coomponentes/input'
 import Logo from './coomponentes/logo'
 import Saldo from './coomponentes/saldo';
+import InputValor from './coomponentes/inputValor';
 
 const styles = StyleSheet.create({
     container: {
@@ -27,6 +27,17 @@ const styles = StyleSheet.create({
 
 export default function Apostar(props) {
 
+    const [ganhos, setGanhos] = useState('')
+
+    const atualizarGanhos = (valorAposta) => {
+        if (!isNaN(valorAposta)) {
+            const ganhosPotenciais = (props.route.params.odd * parseFloat(valorAposta)).toFixed(2);
+            setGanhos(ganhosPotenciais);
+        } else {
+            setGanhos('');
+        }
+    };
+
     return (
         <View style={styles.container}>
             <Logo
@@ -37,12 +48,16 @@ export default function Apostar(props) {
                 <Text style={{ color: 'white', fontWeight: 'bold' }} marginTop={100} marginBottom={15}>
                     {props.route.params.time}     x {props.route.params.odd.toFixed(2)}
                 </Text>
-                <Input
+                <InputValor
+                    func={(valor) => atualizarGanhos(valor)}
                     width={250}
                     texto='R$ '
                     tipo='numeric'
                 />
-                
+                <Text style={{ color: 'white', fontWeight: 'bold' }} marginTop={15}> 
+                    Ganhos potenciais: {' '}
+                    <Text style={{ color: '#FFEB3B' }}>{ganhos}</Text>
+                </Text>
             </View>
             <Botao
                 style={styles.botao}

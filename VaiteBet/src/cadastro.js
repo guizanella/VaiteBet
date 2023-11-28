@@ -33,14 +33,6 @@ export default function Cadastro({ navigation }) {
             />
             <Input
                 width={250}
-                texto='Email'
-            />
-            <Input
-                width={250}
-                texto='CPF'
-            />
-            <Input
-                width={250}
                 texto='Nome de Usuário'
             />
             <Input

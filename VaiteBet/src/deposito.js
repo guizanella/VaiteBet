@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Botao from './coomponentes/botao'
-import Input from './coomponentes/input'
 import Logo from './coomponentes/logo'
 import Saldo from './coomponentes/saldo';
+import InputValor from './coomponentes/inputValor';
+
+import { firebase } from './config/firebaseConfig'
 
 const styles = StyleSheet.create({
     container: {
@@ -27,6 +29,36 @@ const styles = StyleSheet.create({
 
 export default function Deposito({ navigation }) {
 
+    const [saldo, setSaldo] = useState(0)
+
+    useEffect(() => {
+        
+        async function carregaSaldo() {
+            await firebase.database().ref('usuario/1').on('value', (snapshot) => {
+                setSaldo(snapshot.val().saldo)
+            })
+        }
+
+        carregaSaldo()
+    }, []) 
+
+    const [vlDeposito, setVlDeposito] = useState(0)
+
+    const getVlDeposito = (valorDeposito) => {
+        setVlDeposito(valorDeposito);
+    };
+
+    async function depositar(valorDeposito) {
+        if (!isNaN(valorDeposito)) {
+            alert("Depósito de R$ " + valorDeposito + " realizado com sucesso!")
+            await firebase.database().ref('usuario/1').update({
+                saldo: parseFloat(saldo) + parseFloat(vlDeposito)
+            })
+        } else {
+            alert('Informe um valor válido.')
+        }
+    }
+
     return (
         <View style={styles.container}>
             <Logo
@@ -34,20 +66,20 @@ export default function Deposito({ navigation }) {
             />
             <Saldo />
             <View marginBottom = {40} alignItems = 'center'>
-                <Text style={{ color: 'white', fontWeight: 'bold' }} marginTop={100}>
-                    Informe o valor do depósito
+                <Text style={{ color: 'white', fontWeight: 'bold' }} marginTop={100} marginBottom={10}>
+                    Informe o valor do depósito:
                 </Text>
-                <Text style={{ color: 'white' }} marginBottom={10}>
-                    (Valor mínimo 30,00 R$)
-                </Text>
-                <Input
+                <InputValor
+                    func={(valor) => getVlDeposito(valor)}
                     width={250}
                     texto='R$ '
+                    tipo='numeric'
                 />
             </View>
             <Botao
                 style={styles.botao}
                 text='Depositar'
+                func={() => depositar(vlDeposito)}
             />
         </View>
     );
