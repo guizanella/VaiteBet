@@ -5,7 +5,6 @@ import Botao from './coomponentes/botao'
 import Logo from './coomponentes/logo'
 import Saldo from './coomponentes/saldo'
 import Jogo from './jogo'
-import JogosList from './objetos/jogosList';
 
 import { firebase } from './config/firebaseConfig'
 
@@ -39,10 +38,42 @@ const styles = StyleSheet.create({
 
 export default function Inicio({ navigation }) {
 
-    const [nome, setNome] = useState('')
+    const [jogos, setJogos] = useState([])
 
     useEffect(() => {
         
+        async function carregaJogos() {
+
+            await firebase.database().ref('jogo').on('value', (snapshot) => {
+                
+                setJogos([])
+
+                snapshot.forEach((item) => {
+                    let data = {
+                        key: item.key,
+                        casa: item.val().casa,
+                        oddCasa: item.val().oddCasa,
+                        golsCasa: item.val().golsCasa,
+                        fora: item.val().fora,
+                        oddFora: item.val().oddFora,
+                        golsFora: item.val().golsFora,
+                        empate: item.val().empate,
+                        encerrado: item.val().encerrado
+                    }
+
+                    if (!data.encerrado) {
+                        setJogos(old => [...old, data])
+                    }
+                })
+            })
+        }
+
+        carregaJogos()
+    }, []) 
+
+    const [nome, setNome] = useState('')
+
+    useEffect(() => {
         
         async function carregaNome() {
             await firebase.database().ref('usuario/1').on('value', (snapshot) => {
@@ -51,10 +82,9 @@ export default function Inicio({ navigation }) {
         }
 
         carregaNome()
-
     }, []) 
 
-    const principaisJogos = JogosList.slice(0, 5);
+    const principaisJogos = jogos.slice(0, 5);
 
     return (
         <View style={styles.container}>

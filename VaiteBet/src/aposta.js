@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -33,28 +33,70 @@ const styles = StyleSheet.create({
     },
 });
 
-const Aposta = ({ aposta }) => (
-    <View style={styles.container}>
-        <View style={styles.betContainer}>
-            <Text 
-                style={aposta.resultado  
-                    ? (aposta.resultado == aposta.aposta ? styles.greenText : styles.redText) : styles.whiteText}>
-                {aposta.resultado ? aposta.resultado : aposta.aposta}
-            </Text>
-            <Text 
-                style={aposta.resultado 
-                        ? (aposta.resultado == aposta.aposta ? styles.greenText : styles.redText) : styles.whiteText}>
-                {aposta.odd.toFixed(2)}
-            </Text>
-        </View>
-        <View style={{alignItems: 'center'}}>
-            <Text style={styles.whiteText}>{aposta.casa + " " + aposta.placar + " " + aposta.fora}</Text>
-        </View>
-        <View style={styles.betContainer}>
-            <Text style={styles.whiteText}>Aposta: R$ {aposta.valor.toFixed(2)}</Text>
-            <Text style={styles.whiteText}>Ganho: R$ {aposta.resultado == aposta.aposta ? (aposta.valor * aposta.odd).toFixed(2) : '0'}</Text>
-        </View>
-    </View>
-)
+export default function Aposta({ aposta }) {
 
-export default Aposta;
+    let resultado
+
+    if (aposta.jogo.golsCasa > aposta.jogo.golsFora) {
+        resultado = "Casa"
+    } else if (aposta.jogo.golsCasa < aposta.jogo.golsFora) {
+        resultado = "Fora"
+    } else {
+        resultado = "Empate"
+    }
+
+    const [odd, setOdd] = useState(1.0)
+
+    useEffect(() => {
+        
+        if (aposta.aposta == "Casa") {
+            setOdd(aposta.jogo.oddCasa)
+        } else if (aposta.aposta == "Fora") {
+            setOdd(aposta.jogo.oddFora)
+        } else {
+            setOdd(aposta.jogo.empate)
+        }
+
+    }, [])
+
+
+    const [ganho, setGanho] = useState(0.0)
+
+    useEffect(() => {
+        
+        setGanho(resultado != aposta.aposta ? 0.0 : parseFloat(odd) * parseFloat(aposta.vlAposta))
+    }, [odd])
+
+
+    const [cor, setCor] = useState(styles.whiteText)
+
+    useEffect(() => {
+
+        if (aposta.jogo.encerrado) {
+
+            setCor(resultado != aposta.aposta ? styles.redText : styles.greenText)
+        }
+    }, [])
+
+    return ( 
+        <View style={styles.container}>
+            <View style={styles.betContainer}>
+                <Text style={cor}>
+                    {aposta.aposta}
+                </Text>
+                <Text style={cor}>
+                    {odd}
+                </Text>
+            </View>
+            <View style={{alignItems: 'center'}}>
+                <Text style={styles.whiteText}>
+                    {aposta.jogo.casa + " " + aposta.jogo.golsCasa + " x " + aposta.jogo.golsFora + " " +aposta.jogo.fora}
+                </Text>
+            </View>
+            <View style={styles.betContainer}>
+                <Text style={styles.whiteText}>Aposta: R$ {aposta.vlAposta}</Text>
+                <Text style={styles.whiteText}>Ganho: R$ {ganho.toFixed(2)}</Text>
+            </View>
+        </View> 
+    )
+}
