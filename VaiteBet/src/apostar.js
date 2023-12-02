@@ -50,25 +50,48 @@ export default function Apostar(props) {
         atualizarVlAposta(parseFloat(valor))
     }
 
+
+    const [usuario, setUsuario] = useState('')
+
+    useEffect(() => {
+        
+        async function carregaUsuario() {
+            await firebase.database().ref('usuario/1').on('value', (snapshot) => {
+                setUsuario(snapshot)
+            })
+        }
+
+        carregaUsuario()
+    }, []) 
+
     async function apostar() {
         if (vlAposta !== '' && vlAposta > 0 && !isNaN(vlAposta))  {
 
-            let apostaRef = await firebase.database().ref('aposta')
-            let key = apostaRef.push().key
+            if (vlAposta <= usuario.val().saldo) {
 
-            apostaRef.child(key).set({
-                aposta: props.route.params.aposta,
-                vlAposta: vlAposta,
-                usuario: 1,
-                jogo: parseFloat(props.route.params.idJogo)
-            })
+                let apostaRef = await firebase.database().ref('aposta')
+                let key = apostaRef.push().key
 
-            alert("Aposta realizada com sucesso!")
+                apostaRef.child(key).set({
+                    aposta: props.route.params.aposta,
+                    vlAposta: vlAposta,
+                    usuario: usuario.key,
+                    jogo: parseFloat(props.route.params.idJogo)
+                })
 
-            return
+                firebase.database().ref('usuario/' + usuario.key).update({
+                    saldo: (usuario.val().saldo - vlAposta)
+                })
+
+                alert("Aposta realizada com sucesso! ")
+
+                return
+            } else {
+                alert('Saldo insuficiente.')
+            }
+        } else {
+            alert('Informe um valor válido!')
         }
-
-        alert('Informe um valor válido!')
     }
 
     return (
