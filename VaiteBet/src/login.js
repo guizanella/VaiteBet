@@ -59,8 +59,6 @@ export default function Login({ navigation }) {
                 usuario = snapshot.val()
             })
 
-            alert("Bem vindo " + usuario.nome + "!")
-
             navigation.navigate('Inicio', {userId: value.user.uid})
         }).catch(() => {
             alert('Email ou senha incorretos.')

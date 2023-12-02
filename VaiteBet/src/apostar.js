@@ -86,6 +86,8 @@ export default function Apostar(props) {
 
                 alert("Aposta realizada com sucesso! ")
 
+                props.route.params.navigation.goBack()
+
                 return
             } else {
                 alert('Saldo insuficiente.')
