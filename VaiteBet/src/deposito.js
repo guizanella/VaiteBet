@@ -49,7 +49,7 @@ export default function Deposito({ navigation }) {
     };
 
     async function depositar(valorDeposito) {
-        if (!isNaN(valorDeposito)) {
+        if (!isNaN(valorDeposito) && valorDeposito > 0) {
             alert("Depósito de R$ " + valorDeposito + " realizado com sucesso!")
             await firebase.database().ref('usuario/1').update({
                 saldo: parseFloat(saldo) + parseFloat(vlDeposito)

@@ -30,9 +30,10 @@ const styles = StyleSheet.create({
 export default function Apostar(props) {
 
     const [ganhos, setGanhos] = useState('')
+    const [vlAposta, setVlAposta] = useState('')
 
     const atualizarGanhos = (valorAposta) => {
-        if (!isNaN(valorAposta)) {
+        if (!isNaN(valorAposta) && valorAposta !== '' && valorAposta > 0) {
             const ganhosPotenciais = (props.route.params.odd * parseFloat(valorAposta)).toFixed(2);
             setGanhos(ganhosPotenciais);
         } else {
@@ -40,21 +41,35 @@ export default function Apostar(props) {
         }
     };
 
-    const [jogo, setJogo] = useState({})
+    const atualizarVlAposta = (valorAposta) => {
+        setVlAposta(valorAposta)
+    }
 
-    useEffect(() => {
-        
-        async function carregaJogo() {
-            await firebase.database().ref('jogo/' + props.route.params.id).on('value', (snapshot) => {
-                
-                setJogo(snapshot.val())
+    const atualizarValores = (valor) => {
+        atualizarGanhos(parseFloat(valor))
+        atualizarVlAposta(parseFloat(valor))
+    }
+
+    async function apostar() {
+        if (vlAposta !== '' && vlAposta > 0 && !isNaN(vlAposta))  {
+
+            let apostaRef = await firebase.database().ref('aposta')
+            let key = apostaRef.push().key
+
+            apostaRef.child(key).set({
+                aposta: props.route.params.aposta,
+                vlAposta: vlAposta,
+                usuario: 1,
+                jogo: parseFloat(props.route.params.idJogo)
             })
+
+            alert("Aposta realizada com sucesso!")
+
+            return
         }
 
-        carregaJogo()
-    }, []) 
-
-    console.log(jogo)
+        alert('Informe um valor válido!')
+    }
 
     return (
         <View style={styles.container}>
@@ -67,7 +82,7 @@ export default function Apostar(props) {
                     {props.route.params.time}     x {props.route.params.odd.toFixed(2)}
                 </Text>
                 <InputValor
-                    func={(valor) => atualizarGanhos(valor)}
+                    func={(valor) => atualizarValores(valor)}
                     width={250}
                     texto='R$ '
                     tipo='numeric'
@@ -78,6 +93,7 @@ export default function Apostar(props) {
                 </Text>
             </View>
             <Botao
+                func={() => apostar()}
                 style={styles.botao}
                 text='Apostar'
             />

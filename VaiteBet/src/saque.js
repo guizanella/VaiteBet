@@ -49,7 +49,7 @@ export default function Saque({ navigation }) {
     };
 
     async function sacar(valorSaque) {
-        if (!isNaN(valorSaque)) {
+        if (!isNaN(valorSaque) && valorSaque > 0) {
             if (saldo >= valorSaque) {
                 alert("Saque de R$ " + valorSaque + " realizado com sucesso!")
                 await firebase.database().ref('usuario/1').update({

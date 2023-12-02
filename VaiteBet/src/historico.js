@@ -19,8 +19,6 @@ export default function Historico(props) {
 
     const [apostas, setApostas] = useState([])
 
-    console.log(props.route.params.jogosList)
-
     useEffect(() => {
 
         async function carregaApostas() {
@@ -30,26 +28,27 @@ export default function Historico(props) {
 
                 snapshot.forEach((item) => {
 
-                    const jogoCorrespondente = props.route.params.jogosList.find(jogo => jogo.key == item.val().jogo);
+                    if (item.val().usuario == 1) {
 
-                    let data = {
-                        key: item.key,
-                        aposta: item.val().aposta,
-                        vlAposta: item.val().vlAposta,
-                        jogo: item.val().jogo,
-                        usuario: item.val().usuario,
-                        jogoInfo: jogoCorrespondente
+                        const jogoCorrespondente = props.route.params.jogosList.find(jogo => jogo.key == item.val().jogo);
+
+                        let data = {
+                            key: item.key,
+                            aposta: item.val().aposta,
+                            vlAposta: item.val().vlAposta,
+                            jogo: item.val().jogo,
+                            usuario: item.val().usuario,
+                            jogoInfo: jogoCorrespondente
+                        }
+
+                        setApostas(old => [...old, data])
                     }
-
-                    setApostas(old => [...old, data])
                 })
             })
         }
 
         carregaApostas();
     }, [])
-
-    console.log(apostas)
 
     return (
         <View style={styles.container}>
