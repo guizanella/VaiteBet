@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React  from 'react';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
+import React, { useState }  from 'react';
 
 import Botao from './coomponentes/botao'
-import Input from './coomponentes/input'
 import Logo from './coomponentes/logo'
+
+import { firebase } from './config/firebaseConfig'
 
 const styles = StyleSheet.create({
     container: {
@@ -29,10 +30,46 @@ const styles = StyleSheet.create({
         color: '#FFEB3B',
         fontWeight: 'bold',
         textDecorationLine: 'underline'
+    },
+    input: {
+        backgroundColor: '#595959',
+        height: 42,
+        borderRadius: 5,
+        marginBottom: 5,
+        paddingHorizontal: 12,
+        color: 'white'
     }
 });
 
 export default function Login({ navigation }) {
+
+    const [email, setEmail] = useState('')
+    const [senha, setSenha] = useState('')
+    const [user, setUser] = useState('')
+
+    async function logar() {
+
+        await firebase.auth().signInWithEmailAndPassword(email, senha)
+        .then((value) => {
+
+            var usuario;
+
+            firebase.database().ref('usuario').child(value.user.uid)
+            .on('value', (snapshot) => {
+                usuario = snapshot.val()
+            })
+
+            alert("Bem vindo " + usuario.nome + "!")
+
+            navigation.navigate('Inicio', {userId: value.user.uid})
+        }).catch(() => {
+            alert('Email ou senha incorretos.')
+            return
+        })
+
+        setEmail('')
+        setSenha('')
+    }
 
     return (
         <View style={styles.container}>
@@ -40,20 +77,26 @@ export default function Login({ navigation }) {
                 size={270} 
                 margem={50}    
             />
-            <Input
-                width={250}
-                texto='Nome de Usuário'
+            <TextInput
+                style={[styles.input, {width: 250}]}
+                func={(valor) => setEmail(valor)}
+                placeholder='Email'
+                value={email}
+                onChangeText={(texto) => setEmail(texto)}
             />
-            <Input
-                width={250}
-                texto='Senha'
-                senha={true}
+            <TextInput
+                style={[styles.input, {width: 250}]}
+                func={(valor) => setSenha(valor)}
+                placeholder='Senha'
+                value={senha}
+                onChangeText={(texto) => setSenha(texto)}
+                secureTextEntry={true}
             />
             <View style={{ alignItems: 'center', flex: 1, justifyContent: 'flex-end', paddingBottom: 85 }}>
                 <Botao
                     style={styles.botao}
                     text='Entrar'
-                    func={() => navigation.navigate('Inicio')}
+                    func={() => logar()}
                 />
                 <Text style={{ color: 'white' }}>
                     Não possui uma conta?

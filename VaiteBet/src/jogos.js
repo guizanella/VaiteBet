@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function Jogos({ navigation }) {
+export default function Jogos({ navigation, route }) {
 
     const [jogos, setJogos] = useState([])
 
@@ -54,12 +54,12 @@ export default function Jogos({ navigation }) {
             <Logo
                 size={170}
             />
-            <Saldo/>
+            <Saldo userId={route.params.userId}/>
             <View alignItems='center' paddingBottom={180}>
                 <FlatList
                     data={jogos}
                     keyExtractor={(item) => item.key}
-                    renderItem={({item}) => <Jogo params={[item,navigation]}/>}
+                    renderItem={({item}) => <Jogo params={[item,navigation,route.params.userId]}/>}
                     marginVertical = {10}
                 />
             </View>

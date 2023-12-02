@@ -27,14 +27,14 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function Deposito({ navigation }) {
+export default function Deposito({ navigation, route }) {
 
     const [saldo, setSaldo] = useState(0)
 
     useEffect(() => {
         
         async function carregaSaldo() {
-            await firebase.database().ref('usuario/1').on('value', (snapshot) => {
+            await firebase.database().ref('usuario/' + route.params.userId).on('value', (snapshot) => {
                 setSaldo(snapshot.val().saldo)
             })
         }
@@ -51,7 +51,7 @@ export default function Deposito({ navigation }) {
     async function depositar(valorDeposito) {
         if (!isNaN(valorDeposito) && valorDeposito > 0) {
             alert("Depósito de R$ " + valorDeposito + " realizado com sucesso!")
-            await firebase.database().ref('usuario/1').update({
+            await firebase.database().ref('usuario/' + route.params.userId).update({
                 saldo: parseFloat(saldo) + parseFloat(vlDeposito)
             })
         } else {
@@ -64,7 +64,7 @@ export default function Deposito({ navigation }) {
             <Logo
                 size={170}
             />
-            <Saldo />
+            <Saldo userId={route.params.userId}/>
             <View marginBottom = {40} alignItems = 'center'>
                 <Text style={{ color: 'white', fontWeight: 'bold' }} marginTop={100} marginBottom={10}>
                     Informe o valor do depósito:

@@ -27,14 +27,14 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function Saque({ navigation }) {
+export default function Saque({ navigation, route }) {
 
     const [saldo, setSaldo] = useState(0)
 
     useEffect(() => {
         
         async function carregaSaldo() {
-            await firebase.database().ref('usuario/1').on('value', (snapshot) => {
+            await firebase.database().ref('usuario/' + route.params.userId).on('value', (snapshot) => {
                 setSaldo(snapshot.val().saldo)
             })
         }
@@ -52,7 +52,7 @@ export default function Saque({ navigation }) {
         if (!isNaN(valorSaque) && valorSaque > 0) {
             if (saldo >= valorSaque) {
                 alert("Saque de R$ " + valorSaque + " realizado com sucesso!")
-                await firebase.database().ref('usuario/1').update({
+                await firebase.database().ref('usuario/' + route.params.userId).update({
                     saldo: parseFloat(saldo) - parseFloat(vlSaque)
                 })
             } else alert('Saldo insuficiente.')
@@ -66,7 +66,7 @@ export default function Saque({ navigation }) {
             <Logo
                 size={170}
             />
-            <Saldo />
+            <Saldo userId={route.params.userId}/>
             <View marginBottom = {40} alignItems = 'center'>
                 <Text style={{ color: 'white', fontWeight: 'bold' }} marginTop={100} marginBottom={10}>
                     Informe o valor do saque:

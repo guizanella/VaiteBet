@@ -56,7 +56,8 @@ export default function Apostar(props) {
     useEffect(() => {
         
         async function carregaUsuario() {
-            await firebase.database().ref('usuario/1').on('value', (snapshot) => {
+            await firebase.database().ref('usuario/' + props.route.params.userId)
+            .on('value', (snapshot) => {
                 setUsuario(snapshot)
             })
         }
@@ -99,7 +100,7 @@ export default function Apostar(props) {
             <Logo
                 size={170}
             />
-            <Saldo />
+            <Saldo userId={props.route.params.userId}/>
             <View marginBottom = {40}>
                 <Text style={{ color: 'white', fontWeight: 'bold' }} marginTop={100} marginBottom={15}>
                     {props.route.params.time}     x {props.route.params.odd.toFixed(2)}

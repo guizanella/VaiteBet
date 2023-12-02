@@ -40,7 +40,8 @@ const Jogo = ({ params }) => (
                         idJogo: params[0].key,
                         time: params[0].casa,
                         odd: params[0].oddCasa,
-                        aposta: 'Casa'
+                        aposta: 'Casa',
+                        userId: params[2]
                     })}
                 />
                 <Botao
@@ -51,7 +52,8 @@ const Jogo = ({ params }) => (
                         idJogo: params[0].key,
                         time: 'Empate',
                         odd: params[0].empate,
-                        aposta: 'Empate'
+                        aposta: 'Empate',
+                        userId: params[2]
                     })}
                 />
                 <Botao
@@ -62,7 +64,8 @@ const Jogo = ({ params }) => (
                         idJogo: params[0].key,
                         time: params[0].fora,
                         odd: params[0].oddFora,
-                        aposta: 'Fora'
+                        aposta: 'Fora',
+                        userId: params[2]
                     })}
                 />
             </View>

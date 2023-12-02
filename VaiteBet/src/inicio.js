@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function Inicio({ navigation }) {
+export default function Inicio({ navigation, route}) {
 
     const [jogos, setJogos] = useState([])
     const [jogosInicio, setJogosInicio] = useState([])
@@ -79,7 +79,7 @@ export default function Inicio({ navigation }) {
     useEffect(() => {
         
         async function carregaNome() {
-            await firebase.database().ref('usuario/1').on('value', (snapshot) => {
+            await firebase.database().ref('usuario/' + route.params.userId).on('value', (snapshot) => {
                 setNome(snapshot.val().nome)
             })
         }
@@ -97,30 +97,30 @@ export default function Inicio({ navigation }) {
             <Text style={{ color: 'white' }}>
                 Olá, {nome}!
             </Text>
-            <Saldo/>
+            <Saldo userId={route.params.userId}/>
             <View style={styles.botoes}>
                 <Botao
                     style={styles.botao}
                     text='Depositar'
-                    func={() => navigation.navigate('Deposito')}
+                    func={() => navigation.navigate('Deposito', {userId: route.params.userId})}
                 />
                 <Botao
                     style={styles.botao}
                     text='Sacar'
-                    func={() => navigation.navigate('Saque')}
+                    func={() => navigation.navigate('Saque', {userId: route.params.userId})}
                 />
             </View>
             <View alignItems='center'>
 
                 {principaisJogos.map((jogo) => (
-                    <Jogo params={[jogo,navigation]}/>
+                    <Jogo params={[jogo,navigation,route.params.userId]}/>
                 ))}
 
                 <Botao
                     style={styles.botao}
                     text='Mais Jogos'
                     textStyle={styles.textoBotao}
-                    func={() => navigation.navigate('Jogos')}
+                    func={() => navigation.navigate('Jogos', {userId: route.params.userId})}
                 />
             </View>
             <View style={{ alignItems: 'center', flex: 1, justifyContent: 'flex-end', paddingBottom: 40 }}>
@@ -128,7 +128,7 @@ export default function Inicio({ navigation }) {
                     style={styles.botao}
                     text='Histórico de Apostas'
                     textStyle={styles.textoBotao}
-                    func={() => navigation.navigate('Historico', {jogosList: jogos})}
+                    func={() => navigation.navigate('Historico', {jogosList: jogos, userId: route.params.userId})}
                 />
             </View>
         </View>

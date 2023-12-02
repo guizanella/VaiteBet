@@ -28,7 +28,7 @@ export default function Historico(props) {
 
                 snapshot.forEach((item) => {
 
-                    if (item.val().usuario == 1) {
+                    if (item.val().usuario == props.route.params.userId) {
 
                         const jogoCorrespondente = props.route.params.jogosList.find(jogo => jogo.key == item.val().jogo);
 
@@ -53,7 +53,7 @@ export default function Historico(props) {
     return (
         <View style={styles.container}>
             <Logo size={170} />
-            <Saldo />
+            <Saldo userId={props.route.params.userId}/>
             <View alignItems="flex" style={{ width: '100%' }} paddingBottom={180}>
                 <FlatList
                     data={apostas}
