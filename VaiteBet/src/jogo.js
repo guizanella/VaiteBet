@@ -37,6 +37,7 @@ const Jogo = ({ params }) => (
                     text={params[0].casa + " " + params[0].oddCasa.toFixed(2)}
                     textStyle={styles.texto}
                     func={() => params[1].navigate('Apostar', {
+                        id: params[0].key,
                         time: params[0].casa,
                         odd: params[0].oddCasa,
                     })}
@@ -46,6 +47,7 @@ const Jogo = ({ params }) => (
                     text={"X " + params[0].empate.toFixed(2)}
                     textStyle={styles.texto}
                     func={() => params[1].navigate('Apostar', {
+                        id: params[0].key,
                         time: 'Empate',
                         odd: params[0].empate,
                     })}
@@ -55,6 +57,7 @@ const Jogo = ({ params }) => (
                     text={params[0].fora + " " + params[0].oddFora.toFixed(2)}
                     textStyle={styles.texto}
                     func={() => params[1].navigate('Apostar', {
+                        id: params[0].key,
                         time: params[0].fora,
                         odd: params[0].oddFora,
                     })}

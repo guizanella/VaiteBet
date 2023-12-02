@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Botao from './coomponentes/botao'
 import Logo from './coomponentes/logo'
 import Saldo from './coomponentes/saldo';
 import InputValor from './coomponentes/inputValor';
+
+import { firebase } from './config/firebaseConfig'
 
 const styles = StyleSheet.create({
     container: {
@@ -37,6 +39,22 @@ export default function Apostar(props) {
             setGanhos('');
         }
     };
+
+    const [jogo, setJogo] = useState({})
+
+    useEffect(() => {
+        
+        async function carregaJogo() {
+            await firebase.database().ref('jogo/' + props.route.params.id).on('value', (snapshot) => {
+                
+                setJogo(snapshot.val())
+            })
+        }
+
+        carregaJogo()
+    }, []) 
+
+    console.log(jogo)
 
     return (
         <View style={styles.container}>

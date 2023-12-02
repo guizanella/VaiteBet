@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
 export default function Inicio({ navigation }) {
 
     const [jogos, setJogos] = useState([])
+    const [jogosInicio, setJogosInicio] = useState([])
 
     useEffect(() => {
         
@@ -61,8 +62,10 @@ export default function Inicio({ navigation }) {
                         encerrado: item.val().encerrado
                     }
 
+                    setJogos(old => [...old, data])
+
                     if (!data.encerrado) {
-                        setJogos(old => [...old, data])
+                        setJogosInicio(old => [...old, data])
                     }
                 })
             })
@@ -84,7 +87,7 @@ export default function Inicio({ navigation }) {
         carregaNome()
     }, []) 
 
-    const principaisJogos = jogos.slice(0, 5);
+    const principaisJogos = jogosInicio.slice(0, 5);
 
     return (
         <View style={styles.container}>
@@ -125,7 +128,7 @@ export default function Inicio({ navigation }) {
                     style={styles.botao}
                     text='Histórico de Apostas'
                     textStyle={styles.textoBotao}
-                    func={() => navigation.navigate('Historico')}
+                    func={() => navigation.navigate('Historico', {jogosList: jogos})}
                 />
             </View>
         </View>

@@ -39,6 +39,8 @@ export default function Jogos({ navigation }) {
                         encerrado: item.val().encerrado
                     }
 
+                    console.log(data)
+
                     if (!data.encerrado) {
                         setJogos(old => [...old, data])
                     }

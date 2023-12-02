@@ -37,9 +37,9 @@ export default function Aposta({ aposta }) {
 
     let resultado
 
-    if (aposta.jogo.golsCasa > aposta.jogo.golsFora) {
+    if (aposta.jogoInfo.golsCasa > aposta.jogoInfo.golsFora) {
         resultado = "Casa"
-    } else if (aposta.jogo.golsCasa < aposta.jogo.golsFora) {
+    } else if (aposta.jogoInfo.golsCasa < aposta.jogoInfo.golsFora) {
         resultado = "Fora"
     } else {
         resultado = "Empate"
@@ -50,11 +50,11 @@ export default function Aposta({ aposta }) {
     useEffect(() => {
         
         if (aposta.aposta == "Casa") {
-            setOdd(aposta.jogo.oddCasa)
+            setOdd(aposta.jogoInfo.oddCasa)
         } else if (aposta.aposta == "Fora") {
-            setOdd(aposta.jogo.oddFora)
+            setOdd(aposta.jogoInfo.oddFora)
         } else {
-            setOdd(aposta.jogo.empate)
+            setOdd(aposta.jogoInfo.empate)
         }
 
     }, [])
@@ -72,7 +72,7 @@ export default function Aposta({ aposta }) {
 
     useEffect(() => {
 
-        if (aposta.jogo.encerrado) {
+        if (aposta.jogoInfo.encerrado) {
 
             setCor(resultado != aposta.aposta ? styles.redText : styles.greenText)
         }
@@ -90,7 +90,7 @@ export default function Aposta({ aposta }) {
             </View>
             <View style={{alignItems: 'center'}}>
                 <Text style={styles.whiteText}>
-                    {aposta.jogo.casa + " " + aposta.jogo.golsCasa + " x " + aposta.jogo.golsFora + " " +aposta.jogo.fora}
+                    {aposta.jogoInfo.casa + " " + aposta.jogoInfo.golsCasa + " x " + aposta.jogoInfo.golsFora + " " +aposta.jogoInfo.fora}
                 </Text>
             </View>
             <View style={styles.betContainer}>
