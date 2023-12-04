@@ -50,17 +50,21 @@ export default function Login({ navigation }) {
     async function logar() {
 
         await firebase.auth().signInWithEmailAndPassword(email, senha)
-        .then((value) => {
+        .then(async (value) => {
 
             var usuario;
 
-            firebase.database().ref('usuario').child(value.user.uid)
+            await firebase.database().ref('usuario').child(value.user.uid)
             .on('value', (snapshot) => {
                 usuario = snapshot.val()
             })
 
-            navigation.navigate('Inicio', {userId: value.user.uid})
-        }).catch(() => {
+            if (!usuario.adm) {
+                navigation.navigate('Inicio', {userId: value.user.uid})
+            } else {
+                navigation.navigate('Controle')    
+            }
+        }).catch((error) => {
             alert('Email ou senha incorretos.')
             return
         })

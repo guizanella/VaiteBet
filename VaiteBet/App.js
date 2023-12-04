@@ -10,6 +10,7 @@ import Saque from './src/saque';
 import Deposito from './src/deposito';
 import Historico from './src/historico';
 import Apostar from './src/apostar';
+import Controle from './src/controle';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,7 @@ export default function App() {
         <Stack.Screen name="Deposito" component={Deposito} />
         <Stack.Screen name="Historico" component={Historico} />
         <Stack.Screen name="Apostar" component={Apostar} />
+        <Stack.Screen name="Controle" component={Controle} />
       </Stack.Navigator>
     </NavigationContainer>
   );
